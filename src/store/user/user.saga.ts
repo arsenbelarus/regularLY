@@ -20,7 +20,6 @@ import {
 	addDoc,
 	doc,
 	DocumentReference,
-	CollectionReference,
 	setDoc,
 } from 'firebase/firestore/lite';
 import { updateDoc } from 'firebase/firestore';
@@ -39,10 +38,10 @@ import {
 	toggleUserLoading,
 	UserState,
 } from './user.reducer';
-import { actions as notifications } from 'react-redux-toastr';
 import { push as pushLocation } from 'connected-react-router';
 import { ref, uploadBytes } from 'firebase/storage';
 import { userRefIdSelector, userSelector } from './user.selector';
+import { showNotification } from '../app/app.action';
 
 export function* handleSignUpWithEmail({
 	payload,
@@ -205,7 +204,7 @@ export function* handleUpdateUserPhoto({
 function* handleError(error: any) {
 	const message = error?.split('/')[1]?.replace(').', '')?.toUpperCase();
 	yield put(
-		notifications.add({
+		showNotification({
 			type: 'error',
 			title: message,
 		})

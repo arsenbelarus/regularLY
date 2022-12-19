@@ -1,6 +1,6 @@
 import { put, takeEvery } from 'redux-saga/effects';
 import { getErrorMessage, getMetaInfo } from '../../utils/errorHandler';
-import { actions as notifications } from 'react-redux-toastr';
+import { showNotification } from '../app/app.action';
 
 export function* showErrorOnRejectedAction(action: any) {
 	if (
@@ -11,7 +11,7 @@ export function* showErrorOnRejectedAction(action: any) {
 	const { error, type, meta } = action;
 	const docMeta = getMetaInfo(meta?.arg);
 	yield put(
-		notifications.add({
+		showNotification({
 			type: 'error',
 			title: getErrorMessage(error, type, docMeta) as string,
 		})
